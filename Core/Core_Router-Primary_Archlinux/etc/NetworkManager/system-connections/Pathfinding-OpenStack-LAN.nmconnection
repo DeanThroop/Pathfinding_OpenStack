@@ -1,0 +1,18 @@
+[connection]
+id=Pathfinding - OpenStack - LAN
+uuid=
+type=ethernet
+autoconnect-priority=-998
+
+[ethernet]
+
+[ipv4]
+address1=192.168.31.1/24
+dns=192.168.31.3;208.67.222.222;208.67.220.220;
+method=manual
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=disabled
+
+[proxy]

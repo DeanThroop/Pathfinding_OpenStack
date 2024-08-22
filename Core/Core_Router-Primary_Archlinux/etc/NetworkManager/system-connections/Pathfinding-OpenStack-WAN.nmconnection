@@ -1,0 +1,16 @@
+[connection]
+id=Pathfinding - OpenStack - WAN
+uuid=
+type=ethernet
+autoconnect-priority=-999
+
+[ethernet]
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=stable-privacy
+method=disabled
+
+[proxy]

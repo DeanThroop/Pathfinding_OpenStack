@@ -1,0 +1,94 @@
+23 August 2023
+    **** Initial Build ****
+    su
+         # Built with archlinux-2024.05.01-x86_64.iso
+        boot to thumb drive
+        login root
+            set root password (this is just for the installer)
+            # set IP via dhcp
+            curl www.google.com
+                joy
+        logged in via ssh from my workstation
+                ls /sys/firmware/efi/efivars
+                    booted BIOS
+                timedatectl set-ntp true
+                timedatectl status
+                fdisk -l
+
+                fdisk /dev/sda
+                    Command (m for help): o to create new MBR partition table
+                        Created a new DOS disklabel with disk identifier 0x05fe836a.
+                    Command (m for help): n to create new partition
+                        Partition type
+                           p   primary (0 primary, 0 extended, 4 free)
+                           e   extended (container for logical partitions)
+                        Select (default p):
+                            Using default response p.
+                        Partition number (1-4, default 1):
+                        First sector (2048-16777215, default 2048):
+                        Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-16777215, default 16777215):
+                            Created a new partition 1 of type 'Linux' and of size 8 GiB.
+                    Command (m for help): w to exit
+                        The partition table has been altered.
+                        Calling ioctl() to re-read partition table.
+                        Syncing disks.
+                mkfs.ext4 /dev/xxx
+                mount /dev/xxx /mnt
+                reflector -phttps --latest 10 --sort rate -c US --threads 5 --save /etc/pacman.d/mirrorlist
+                pacman -Sy
+                pacman -S archlinux-keyring
+                pacstrap /mnt base man sudo linux linux-firmware bind-tools ethtool reflector grub efibootmgr vi networkmanager dhclient openssh intel-ucode nftables lshw
+                genfstab -U /mnt >> /mnt/etc/fstab
+                arch-chroot /mnt
+                systemctl enable NetworkManager
+                systemctl enable sshd
+                systemctl enable nftables
+                ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+                hwclock --systohc
+                locale-gen
+                echo "LANG=en_US.UTF-8" > /etc/locale.conf
+                echo "KEYMAP=us" > /etc/vconsole.conf
+                echo "router" > /etc/hostname
+                echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/10-installers
+                chmod 440 /etc/sudoers.d/10-installers
+                passwd
+                    ******
+                useradd -m -G wheel ebpadm
+                passwd ebpadm
+                mkdir -p /home/ebpadm/.ssh/multiplex
+                vi /home/ebpadm/.ssh/authorized_keys
+                    copy and paste workstation file to server
+                vi /home/ebpadm/.ssh/config
+                    copy and paste workstation file to server
+                chmod 700 /home/ebpadm/.ssh/
+                chmod 600 /home/ebpadm/.ssh/*
+                chown -R ebpadm:ebpadm /home/ebpadm/
+                mkinitcpio -P
+                grub-install --target=i386-pc /dev/sda
+                grub-mkconfig -o /boot/grub/grub.cfg
+                vi /etc/nftables.conf
+                    copy and paste from workstation to server
+                echo "" > /etc/ssh/sshd_config && vi /etc/ssh/sshd_config
+                    copy and paste from workstation to server
+                vi /etc/systemd/system/multi-user.target.wants/sshd.service
+                    add ExecStartPre=/bin/sleep 2
+                        [Unit]
+                        Description=OpenSSH Daemon
+                        Wants=sshdgenkeys.service
+                        After=sshdgenkeys.service
+                        After=network.target
+
+                        [Service]
+                        ExecStartPre=/bin/sleep 2
+                        ExecStart=/usr/bin/sshd -D
+                        ExecReload=/bin/kill -HUP $MAINPID
+                        KillMode=process
+                        Restart=always
+
+                        [Install]
+                        WantedBy=multi-user.target
+                vi /etc/bash.bashrc
+                    see workstation file, alias mostly
+                exit
+                umount -R /mnt
+                reboot
