@@ -1,7 +1,8 @@
 [connection]
 id=Pathfinding - OpenStack - LAN
-uuid=
+uuid=e1fea60a-ac5c-46ed-9105-123ac2fd6119
 type=ethernet
+interface-name=enp2s0f0
 autoconnect-priority=-998
 
 [ethernet]

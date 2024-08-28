@@ -1,4 +1,9 @@
-23 August 2023
+# Access command(s)
+ssh h-router-wg
+# Reminders
+# Outstanding Tasks:
+# Change Log:
+28 August 2023
     **** Initial Build ****
     su
          # Built with archlinux-2024.05.01-x86_64.iso
@@ -9,86 +14,413 @@
             curl www.google.com
                 joy
         logged in via ssh from my workstation
-                ls /sys/firmware/efi/efivars
-                    booted BIOS
-                timedatectl set-ntp true
-                timedatectl status
-                fdisk -l
+            ls /sys/firmware/efi/efivars
+                # any output means boot efi instead of bios
+                booted UEFI
+            timedatectl set-ntp true
+            timedatectl status
+            fdisk -l
+                Disk /dev/sda: 59 GiB, 63350767616 bytes, 123731968 sectors
+                Disk model: SuperMicro SSD
+                Units: sectors of 1 * 512 = 512 bytes
+                Sector size (logical/physical): 512 bytes / 512 bytes
+                I/O size (minimum/optimal): 512 bytes / 512 bytes
+                Disklabel type: gpt
+                Disk identifier: D84CBA80-8564-49FA-B520-C12B6AF6CBCC
 
-                fdisk /dev/sda
-                    Command (m for help): o to create new MBR partition table
-                        Created a new DOS disklabel with disk identifier 0x05fe836a.
-                    Command (m for help): n to create new partition
-                        Partition type
-                           p   primary (0 primary, 0 extended, 4 free)
-                           e   extended (container for logical partitions)
-                        Select (default p):
-                            Using default response p.
-                        Partition number (1-4, default 1):
-                        First sector (2048-16777215, default 2048):
-                        Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-16777215, default 16777215):
-                            Created a new partition 1 of type 'Linux' and of size 8 GiB.
-                    Command (m for help): w to exit
-                        The partition table has been altered.
-                        Calling ioctl() to re-read partition table.
-                        Syncing disks.
-                mkfs.ext4 /dev/xxx
-                mount /dev/xxx /mnt
-                reflector -phttps --latest 10 --sort rate -c US --threads 5 --save /etc/pacman.d/mirrorlist
-                pacman -Sy
-                pacman -S archlinux-keyring
-                pacstrap /mnt base man sudo linux linux-firmware bind-tools ethtool reflector grub efibootmgr vi networkmanager dhclient openssh intel-ucode nftables lshw
-                genfstab -U /mnt >> /mnt/etc/fstab
-                arch-chroot /mnt
-                systemctl enable NetworkManager
-                systemctl enable sshd
-                systemctl enable nftables
-                ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-                hwclock --systohc
-                locale-gen
-                echo "LANG=en_US.UTF-8" > /etc/locale.conf
-                echo "KEYMAP=us" > /etc/vconsole.conf
-                echo "router" > /etc/hostname
-                echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/10-installers
-                chmod 440 /etc/sudoers.d/10-installers
-                passwd
-                    ******
-                useradd -m -G wheel ebpadm
-                passwd ebpadm
-                mkdir -p /home/ebpadm/.ssh/multiplex
-                vi /home/ebpadm/.ssh/authorized_keys
-                    copy and paste workstation file to server
-                vi /home/ebpadm/.ssh/config
-                    copy and paste workstation file to server
-                chmod 700 /home/ebpadm/.ssh/
-                chmod 600 /home/ebpadm/.ssh/*
-                chown -R ebpadm:ebpadm /home/ebpadm/
-                mkinitcpio -P
-                grub-install --target=i386-pc /dev/sda
-                grub-mkconfig -o /boot/grub/grub.cfg
-                vi /etc/nftables.conf
-                    copy and paste from workstation to server
-                echo "" > /etc/ssh/sshd_config && vi /etc/ssh/sshd_config
-                    copy and paste from workstation to server
-                vi /etc/systemd/system/multi-user.target.wants/sshd.service
-                    add ExecStartPre=/bin/sleep 2
-                        [Unit]
-                        Description=OpenSSH Daemon
-                        Wants=sshdgenkeys.service
-                        After=sshdgenkeys.service
-                        After=network.target
+                Device       Start       End   Sectors  Size Type
+                /dev/sda1     2048   2203647   2201600    1G EFI System
+                /dev/sda2  2203648   6397951   4194304    2G Linux filesystem
+                /dev/sda3  6397952 123729919 117331968 55.9G Linux filesystem
 
-                        [Service]
-                        ExecStartPre=/bin/sleep 2
-                        ExecStart=/usr/bin/sshd -D
-                        ExecReload=/bin/kill -HUP $MAINPID
-                        KillMode=process
-                        Restart=always
 
-                        [Install]
-                        WantedBy=multi-user.target
-                vi /etc/bash.bashrc
-                    see workstation file, alias mostly
-                exit
-                umount -R /mnt
-                reboot
+                Disk /dev/sdb: 9.1 TiB, 10000831348736 bytes, 19532873728 sectors
+                Disk model: ST10000NM0086-2A
+                Units: sectors of 1 * 512 = 512 bytes
+                Sector size (logical/physical): 512 bytes / 4096 bytes
+                I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+                Disk /dev/sdc: 9.1 TiB, 10000831348736 bytes, 19532873728 sectors
+                Disk model: ST10000NM0086-2A
+                Units: sectors of 1 * 512 = 512 bytes
+                Sector size (logical/physical): 512 bytes / 4096 bytes
+                I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+                Disk /dev/sdd: 57.3 GiB, 61530439680 bytes, 120176640 sectors
+                Disk model:  SanDisk 3.2Gen1
+                Units: sectors of 1 * 512 = 512 bytes
+                Sector size (logical/physical): 512 bytes / 512 bytes
+                I/O size (minimum/optimal): 512 bytes / 512 bytes
+                Disklabel type: dos
+                Disk identifier: 0x8cc6f18c
+
+                Device     Boot   Start     End Sectors  Size Id Type
+                /dev/sdd1  *         64 1898495 1898432  927M  0 Empty
+                /dev/sdd2       1898496 1929215   30720   15M ef EFI (FAT-12/16/32)
+
+
+                Disk /dev/md127: 18.19 TiB, 20001394262016 bytes, 39065223168 sectors
+                Units: sectors of 1 * 512 = 512 bytes
+                Sector size (logical/physical): 512 bytes / 4096 bytes
+                I/O size (minimum/optimal): 4096 bytes / 8192 bytes
+                Disklabel type: gpt
+                Disk identifier: E013D9F0-2536-4E98-BEF2-BD87AD8A916C
+
+                Device       Start         End     Sectors  Size Type
+                /dev/md127p1  2048 39065223134 39065221087 18.2T Linux filesystem
+            # remove LVM mount to allow rebuild
+            lvscan
+                ACTIVE            '/dev/ubuntu-vg/ubuntu-lv' [27.97 GiB] inherit
+            vgdisplay
+                --- Volume group ---
+                VG Name               ubuntu-vg
+                System ID
+                Format                lvm2
+                Metadata Areas        1
+                Metadata Sequence No  2
+                VG Access             read/write
+                VG Status             resizable
+                MAX LV                0
+                Cur LV                1
+                Open LV               0
+                Max PV                0
+                Cur PV                1
+                Act PV                1
+                VG Size               <55.95 GiB
+                PE Size               4.00 MiB
+                Total PE              14322
+                Alloc PE / Size       7161 / 27.97 GiB
+                Free  PE / Size       7161 / 27.97 GiB
+                VG UUID               DZkSDJ-2wXS-mexe-7TgC-UdRf-x0d2-A3NGjP
+            umount -l /dev/mapper/ubuntu--vg-ubuntu--lv
+                umount: /dev/mapper/ubuntu--vg-ubuntu--lv: not mounted.
+            vgchange -a n ubuntu-vg
+                0 logical volume(s) in volume group "ubuntu-vg" now active
+            lvremove /dev/ubuntu-vg/ubuntu-lv
+                Logical volume "ubuntu-lv" successfully removed.
+            lvscan
+                # no output, when running next command, no warnings...joy!
+            gdisk /dev/sda
+                o to create new GPT partition table
+                n to create new partition
+                    default partition number
+                    default partition first sector
+                    last sector = +1G
+                    set partition type to ef00 for EFI system partition
+                n to create new partition
+                    default partition number
+                    default partition first sector
+                    default last sector
+                    set partition type to 8300 Linux Filesystem
+                w to exit
+                Y to confirm write new table
+            mkfs.fat -F 32 /dev/sda1
+                mkfs.fat 4.2 (2021-01-31)
+            mkfs.ext4 /dev/sda2
+                mke2fs 1.47.0 (5-Feb-2023)
+                Discarding device blocks: done
+                Creating filesystem with 15203840 4k blocks and 3801088 inodes
+                Filesystem UUID: bb96ef43-61b2-4eaf-a23f-3d91e95419e7
+                Superblock backups stored on blocks:
+                    32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+                    4096000, 7962624, 11239424
+
+                Allocating group tables: done
+                Writing inode tables: done
+                Creating journal (65536 blocks): done
+                Writing superblocks and filesystem accounting information: done
+            mount /dev/sda2 /mnt
+            mkdir /mnt/boot
+            mount /dev/sda1 /mnt/boot
+            reflector -phttps --latest 10 --sort rate -c US --threads 5 --save /etc/pacman.d/mirrorlist
+                [2024-08-28 21:33:21] WARNING: failed to rate http(s) download (https://mirror.theash.xyz/arch/extra/os/x86_64/extra.db): HTTP Error 403: Forbidden
+                [2024-08-28 21:33:26] WARNING: failed to rate http(s) download (https://zxcvfdsa.com/arch/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:26] WARNING: failed to rate http(s) download (https://us.arch.niranjan.co/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:26] WARNING: failed to rate http(s) download (https://mirrors.rit.edu/archlinux/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:27] WARNING: failed to rate http(s) download (https://america.mirror.pkgbuild.com/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:30] WARNING: failed to rate http(s) download (https://mirror.dal10.us.leaseweb.net/archlinux/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:31] WARNING: failed to rate http(s) download (https://mirror.mia11.us.leaseweb.net/archlinux/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+                [2024-08-28 21:33:32] WARNING: failed to rate http(s) download (https://mirrors.vectair.net/archlinux/extra/os/x86_64/extra.db): Download timed out after 5 second(s).
+            pacman -Sy
+                :: Synchronizing package databases...
+                 core                  118.7 KiB   186 KiB/s 00:01 [##########################] 100%
+                 extra                   7.3 MiB  4.04 MiB/s 00:02 [##########################] 100%
+            pacman -S archlinux-keyring
+                resolving dependencies...
+                looking for conflicting packages...
+
+                Packages (1) archlinux-keyring-20240709-1
+
+                Total Download Size:   1.17 MiB
+                Total Installed Size:  1.67 MiB
+                Net Upgrade Size:      0.01 MiB
+
+                :: Proceed with installation? [Y/n] y
+                :: Retrieving packages...
+                 archlinux-keyrin...  1198.2 KiB  1117 KiB/s 00:01 [##########################] 100%
+                (1/1) checking keys in keyring                     [##########################] 100%
+                (1/1) checking package integrity                   [##########################] 100%
+                (1/1) loading package files                        [##########################] 100%
+                (1/1) checking for file conflicts                  [##########################] 100%
+                (1/1) checking available disk space                [##########################] 100%
+                :: Processing package changes...
+                (1/1) upgrading archlinux-keyring                  [##########################] 100%
+                ==> Appending keys from archlinux.gpg...
+                ==> Disabling revoked keys in keyring...
+                  -> Disabled 1 keys.
+                ==> Updating trust database...
+                gpg: Note: third-party key signatures using the SHA1 algorithm are rejected
+                gpg: (use option "--allow-weak-key-signatures" to override)
+                gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+                gpg: depth: 0  valid:   1  signed:   5  trust: 0-, 0q, 0n, 0m, 0f, 1u
+                gpg: depth: 1  valid:   5  signed: 101  trust: 0-, 0q, 0n, 5m, 0f, 0u
+                gpg: depth: 2  valid:  77  signed:  22  trust: 77-, 0q, 0n, 0m, 0f, 0u
+                gpg: next trustdb check due at 2024-11-09
+                :: Running post-transaction hooks...
+                (1/2) Reloading system manager configuration...
+                (2/2) Arming ConditionNeedsUpdate...
+                pacman -S archlinux-keyring  4.64s user 1.06s system 65% cpu 8.753 total
+            pacstrap /mnt base man sudo linux linux-firmware bind-tools ethtool reflector grub efibootmgr vi networkmanager dhclient openssh intel-ucode nftables lshw haveged bash
+                ==> Creating install root at /mnt
+                ==> Installing packages to /mnt
+                :: Synchronizing package databases...
+                 core                  118.7 KiB   200 KiB/s 00:01 [##########################] 100%
+                 extra                   7.3 MiB  3.80 MiB/s 00:02 [##########################] 100%
+                :: There are 2 providers available for man:
+                :: Repository core
+                   1) man-db
+                :: Repository extra
+                   2) mandoc
+
+                Enter a number (default=1):
+                resolving dependencies...
+                :: There are 2 providers available for libxtables.so=12-64:
+                :: Repository core
+                   1) iptables  2) iptables-nft
+
+                Enter a number (default=1):
+                :: There are 3 providers available for initramfs:
+                :: Repository core
+                   1) mkinitcpio
+                :: Repository extra
+                   2) booster  3) dracut
+
+                Enter a number (default=1):
+                looking for conflicting packages...
+
+                Packages (176) acl-2.3.2-1  archlinux-keyring-20240709-1  argon2-20190702-6
+                               attr-2.5.2-1  audit-4.0.2-1  binutils-2.43+r4+g7999dae6961-1
+                               brotli-1.1.0-2  bzip2-1.0.8-6  ca-certificates-20240618-1
+                               ca-certificates-mozilla-3.103-1  ca-certificates-utils-20240618-1
+                               coreutils-9.5-1  cryptsetup-2.7.4-1  curl-8.9.1-2  db5.3-5.3.28-5
+                               dbus-1.14.10-2  dbus-broker-36-4  dbus-broker-units-36-4
+                               dbus-units-36-4  device-mapper-2.03.26-1  diffutils-3.10-1
+                               dnssec-anchors-20190629-4  duktape-2.7.0-7  e2fsprogs-1.47.1-4
+                               efivar-39-1  expat-2.6.2-1  file-5.45-1  filesystem-2024.04.07-1
+                               findutils-4.10.0-1  gawk-5.3.0-1  gcc-libs-14.2.1+r32+geccf707e5ce-1
+                               gdbm-1.24-1  gettext-0.22.5-1  glib2-2.80.5-1
+                               glibc-2.40+r16+gaa533d58ff-2  gmp-6.3.0-2  gnupg-2.4.5-4
+                               gnutls-3.8.7-1  gpgme-1.23.2-6  gpm-1.20.7.r38.ge82d1a6-6
+                               grep-3.11-1  groff-1.23.0-6  gzip-1.13-4  hwdata-0.385-1
+                               iana-etc-20240814-1  icu-75.1-1  iproute2-6.10.0-2
+                               iptables-1:1.8.10-2  iputils-20240117-1  jansson-2.14-4
+                               jemalloc-1:5.3.0-4  json-c-0.17-2  kbd-2.6.4-1  keyutils-1.6.3-3
+                               kmod-33-3  krb5-1.21.3-1  less-1:661-1  libarchive-3.7.4-1
+                               libassuan-3.0.0-1  libbpf-1.4.3-1  libcap-2.70-1  libcap-ng-0.8.5-2
+                               libdaemon-0.14-6  libedit-20240517_3.1-1  libelf-0.191-4
+                               libevent-2.1.12-4  libffi-3.4.6-1  libgcrypt-1.11.0-2
+                               libgpg-error-1.50-1  libidn2-2.3.7-1  libksba-1.6.7-1
+                               libldap-2.6.8-1  libmaxminddb-1.11.0-1  libmm-glib-1.22.0-1
+                               libmnl-1.0.5-2  libndp-1.9-1  libnetfilter_conntrack-1.0.9-2
+                               libnewt-0.52.24-2  libnfnetlink-1.0.2-2  libnftnl-1.2.7-1
+                               libnghttp2-1.62.1-1  libnghttp3-1.5.0-1  libnl-3.10.0-1
+                               libnm-1.48.10-1  libnsl-2.0.1-1  libp11-kit-0.25.5-1
+                               libpcap-1.10.4-2  libpgm-5.3.128-3  libpipeline-1.5.7-2
+                               libpsl-0.21.5-2  libsasl-2.1.28-5  libseccomp-2.5.5-3
+                               libsecret-0.21.4-1  libsodium-1.0.20-1  libssh2-1.11.0-1
+                               libsysprof-capture-46.0-4  libtasn1-4.19.0-2  libteam-1.32-2
+                               libtirpc-1.3.5-1  libunistring-1.2-1  liburcu-0.14.0-2
+                               libusb-1.0.27-1  libuv-1.48.0-2  libverto-0.3.2-5
+                               libxcrypt-4.4.36-2  libxml2-2.13.3-1  licenses-20240728-1
+                               linux-api-headers-6.10-1  linux-firmware-whence-20240809.59460076-1
+                               lmdb-0.9.33-1  lz4-1:1.10.0-2  mkinitcpio-39.2-2
+                               mkinitcpio-busybox-1.36.1-1
+                               mobile-broadband-provider-info-20240407-1  mpdecimal-4.0.0-2
+                               mpfr-4.2.1-4  ncurses-6.5-3  nettle-3.10-1  npth-1.7-1  nspr-4.35-3
+                               nss-3.103-1  openssl-3.3.1-1  p11-kit-0.25.5-1  pacman-6.1.0-3
+                               pacman-mirrorlist-20240717-1  pam-1.6.1-2  pambase-20230918-2
+                               pciutils-3.13.0-1  pcre-8.45-4  pcre2-10.44-1  pcsclite-2.3.0-1
+                               perl-5.38.2-2  pinentry-1.3.1-5  polkit-125-1  popt-1.19-1
+                               procps-ng-4.0.4-3  psmisc-23.7-1  python-3.12.5-1
+                               readline-8.2.013-1  run-parts-5.17-1  sed-4.9-3  shadow-4.16.0-1
+                               slang-2.3.3-3  sqlite-3.46.1-1  systemd-256.5-1
+                               systemd-libs-256.5-1  systemd-sysvcompat-256.5-1  tar-1.35-2
+                               tpm2-tss-4.0.1-1  tzdata-2024a-2  util-linux-2.40.2-1
+                               util-linux-libs-2.40.2-1  wpa_supplicant-2:2.11-2  xz-5.6.2-1
+                               zeromq-4.3.5-2  zlib-1:1.3.1-2  zstd-1.5.6-1  base-3-2
+                               bash-5.2.032-1  bind-9.20.1-1  dhclient-4.4.3.P1-3  efibootmgr-18-3
+                               ethtool-1:6.9-1  grub-2:2.12-2  haveged-1.9.18-2
+                               intel-ucode-20240813-2  linux-6.10.6.arch1-1
+                               linux-firmware-20240809.59460076-1  lshw-B.02.20-1  man-db-2.12.1-1
+                               networkmanager-1.48.10-1  nftables-1:1.1.0-2  openssh-9.8p1-1
+                               reflector-2023-2  sudo-1.9.15.p5-2  vi-1:070224-6
+
+                Total Download Size:    581.03 MiB
+                Total Installed Size:  1261.74 MiB
+            genfstab -U /mnt >> /mnt/etc/fstab
+            arch-chroot /mnt
+            systemctl enable NetworkManager
+                Created symlink '/etc/systemd/system/multi-user.target.wants/NetworkManager.service' → '/usr/lib/systemd/system/NetworkManager.service'.
+                Created symlink '/etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service' → '/usr/lib/systemd/system/NetworkManager-dispatcher.service'.
+                Created symlink '/etc/systemd/system/network-online.target.wants/NetworkManager-wait-online.service' → '/usr/lib/systemd/system/NetworkManager-wait-online.service'.
+            systemctl enable sshd
+                Created symlink '/etc/systemd/system/multi-user.target.wants/sshd.service' → '/usr/lib/systemd/system/sshd.service'.
+            systemctl enable nftables
+                Created symlink '/etc/systemd/system/multi-user.target.wants/nftables.service' → '/usr/lib/systemd/system/nftables.service'.
+            systemctl enable haveged
+                Created symlink '/etc/systemd/system/sysinit.target.wants/haveged.service' → '/usr/lib/systemd/system/haveged.service'.
+            ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+            hwclock --systohc
+            vi /etc/systemd/timesyncd.conf
+                # see workstation file, ensure pointing to accessible servers
+            locale-gen
+                Generating locales...
+                Generation complete.
+            echo "LANG=en_US.UTF-8" > /etc/locale.conf && echo "LANGUAGE=en_US" >> /etc/locale.conf && echo "LC_ALL=C" >> /etc/locale.conf && echo "KEYMAP=us" > /etc/vconsole.conf && echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/10-installers && chmod 440 /etc/sudoers.d/10-installers
+
+            echo "LANG=en_US.UTF-8" > /etc/locale.conf
+            echo "LANGUAGE=en_US" >> /etc/locale.conf
+            echo "LC_ALL=C" >> /etc/locale.conf
+            echo "KEYMAP=us" > /etc/vconsole.conf
+            echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/10-installers
+            chmod 440 /etc/sudoers.d/10-installers
+
+            echo "h-router-wg" > /etc/hostname
+            passwd
+                ******
+            # Add standard admin
+            useradd -m -G wheel ebpadm && passwd ebpadm && mkdir /home/ebpadm/.ssh && chmod 700 /home/ebpadm/.ssh && vi /home/ebpadm/.ssh/authorized_keys && chown -R ebpadm:ebpadm /home/ebpadm/.ssh && chmod 600 /home/ebpadm/.ssh/*
+
+            useradd -m -G wheel ebpadm
+            passwd ebpadm
+            mkdir /home/ebpadm/.ssh
+            chmod 700 /home/ebpadm/.ssh
+            vi /home/ebpadm/.ssh/authorized_keys
+                copy and paste from workstation
+            chown -R ebpadm:ebpadm /home/ebpadm/.ssh
+            chmod 600 /home/ebpadm/.ssh/*
+            mkinitcpio -P
+                ==> Building image from preset: /etc/mkinitcpio.d/linux.preset: 'default'
+                ==> Using default configuration file: '/etc/mkinitcpio.conf'
+                  -> -k /boot/vmlinuz-linux -g /boot/initramfs-linux.img
+                ==> Starting build: '6.10.6-arch1-1'
+                  -> Running build hook: [base]
+                  -> Running build hook: [udev]
+                  -> Running build hook: [autodetect]
+                  -> Running build hook: [microcode]
+                  -> Running build hook: [modconf]
+                  -> Running build hook: [kms]
+                  -> Running build hook: [keyboard]
+                ==> WARNING: Possibly missing firmware for module: 'xhci_pci'
+                  -> Running build hook: [keymap]
+                  -> Running build hook: [consolefont]
+                ==> WARNING: consolefont: no font found in configuration
+                  -> Running build hook: [block]
+                  -> Running build hook: [filesystems]
+                  -> Running build hook: [fsck]
+                ==> Generating module dependencies
+                ==> Creating zstd-compressed initcpio image: '/boot/initramfs-linux.img'
+                  -> Early uncompressed CPIO image generation successful
+                ==> Initcpio image generation successful
+                ==> Building image from preset: /etc/mkinitcpio.d/linux.preset: 'fallback'
+                ==> Using default configuration file: '/etc/mkinitcpio.conf'
+                  -> -k /boot/vmlinuz-linux -g /boot/initramfs-linux-fallback.img -S autodetect
+                ==> Starting build: '6.10.6-arch1-1'
+                  -> Running build hook: [base]
+                  -> Running build hook: [udev]
+                  -> Running build hook: [microcode]
+                  -> Running build hook: [modconf]
+                  -> Running build hook: [kms]
+                ==> WARNING: Possibly missing firmware for module: 'ast'
+                  -> Running build hook: [keyboard]
+                ==> WARNING: Possibly missing firmware for module: 'xhci_pci'
+                  -> Running build hook: [keymap]
+                  -> Running build hook: [consolefont]
+                ==> WARNING: consolefont: no font found in configuration
+                  -> Running build hook: [block]
+                ==> WARNING: Possibly missing firmware for module: 'qla1280'
+                ==> WARNING: Possibly missing firmware for module: 'qed'
+                ==> WARNING: Possibly missing firmware for module: 'wd719x'
+                ==> WARNING: Possibly missing firmware for module: 'aic94xx'
+                ==> WARNING: Possibly missing firmware for module: 'qla2xxx'
+                ==> WARNING: Possibly missing firmware for module: 'bfa'
+                  -> Running build hook: [filesystems]
+                  -> Running build hook: [fsck]
+                ==> Generating module dependencies
+                ==> Creating zstd-compressed initcpio image: '/boot/initramfs-linux-fallback.img'
+                  -> Early uncompressed CPIO image generation successful
+                ==> Initcpio image generation successful
+            grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+                Installing for x86_64-efi platform.
+                Installation finished. No error reported.
+            grub-mkconfig -o /boot/grub/grub.cfg
+                Generating grub configuration file ...
+                Found linux image: /boot/vmlinuz-linux
+                Found initrd image: /boot/intel-ucode.img /boot/initramfs-linux.img
+                Found fallback initrd image(s) in /boot:  intel-ucode.img initramfs-linux-fallback.img
+                Warning: os-prober will not be executed to detect other bootable partitions.
+                Systems on them will not be added to the GRUB boot configuration.
+                Check GRUB_DISABLE_OS_PROBER documentation entry.
+                Adding boot menu entry for UEFI Firmware Settings ...
+                done
+            uuidgen -r
+                copy and pasted uuid to correct field in Pathfinding-OpenStack-LAN.nmconnection
+            uuidgen -r
+                copy and pasted uuid to correct field in Pathfinding-OpenStack-WAN.nmconnection
+            vi /etc/NetworkManager/system-connections/Pathfinding-OpenStack-LAN.nmconnection
+                see file
+            vi /etc/NetworkManager/system-connections/Pathfinding-OpenStack-WAN.nmconnection
+                see file
+            chmod 600 /etc/NetworkManager/system-connections/*
+            # replaced the sshd_config.original with Dean standard
+            cp /etc/ssh/sshd_config /etc/ssh/sshd_config.original && echo "" > /etc/ssh/sshd_config && vi /etc/ssh/sshd_config
+
+            cp /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+            echo "" > /etc/ssh/sshd_config
+            vi /etc/ssh/sshd_config
+                copied local file to server, see file
+            echo "" > /etc/nftables.conf && vi /etc/nftables.conf
+
+            echo "" > /etc/nftables.conf
+            vi /etc/nftables.conf
+                copied local file to server, see file
+            vi /etc/systemd/system/multi-user.target.wants/sshd.service
+                add ExecStartPre=/bin/sleep 2
+                    [Unit]
+                    Description=OpenSSH Daemon
+                    Wants=sshdgenkeys.service
+                    After=sshdgenkeys.service
+                    After=network.target
+
+                    [Service]
+                    ExecStartPre=/bin/sleep 2
+                    ExecStart=/usr/bin/sshd -D
+                    ExecReload=/bin/kill -HUP $MAINPID
+                    KillMode=process
+                    Restart=always
+
+                    [Install]
+                    WantedBy=multi-user.target
+            exit
+            umount -R /mnt
+            reboot
+        su
+            timedatectl set-ntp true
+            timedatectl status
+            # clean up some environment things
+            vi /etc/bash.bashrc
+                see local file
+            # Enable for router work
+            echo "net.ipv4.ip_forward = 1" > /etc/sysctl.d/99-sysctl.conf
