@@ -1,0 +1,801 @@
+############## Windows Information #################
+
+############## CPU Information ####################
+lscpu
+Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          39 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   8
+  On-line CPU(s) list:    0-7
+Vendor ID:                GenuineIntel
+  BIOS Vendor ID:         Intel(R) Corporation
+  Model name:             Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+    BIOS Model name:      Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz To Be Filled By O.
+                          E.M. CPU @ 1.5GHz
+    BIOS CPU family:      198
+    CPU family:           6
+    Model:                94
+    Thread(s) per core:   2
+    Core(s) per socket:   4
+    Socket(s):            1
+    Stepping:             3
+    CPU(s) scaling MHz:   21%
+    CPU max MHz:          4000.0000
+    CPU min MHz:          800.0000
+    BogoMIPS:             6802.13
+    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca c
+                          mov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm
+                          pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_per
+                          fmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid ap
+                          erfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est t
+                          m2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic
+                           movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand
+                           lahf_lm abm 3dnowprefetch cpuid_fault epb pti ssbd ibrs i
+                          bpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase
+                           tsc_adjust sgx bmi1 avx2 smep bmi2 erms invpcid mpx rdsee
+                          d adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsa
+                          ves dtherm ida arat pln pts hwp hwp_notify hwp_act_window
+                          hwp_epp vnmi md_clear flush_l1d arch_capabilities
+Virtualization features:
+  Virtualization:         VT-x
+Caches (sum of all):
+  L1d:                    128 KiB (4 instances)
+  L1i:                    128 KiB (4 instances)
+  L2:                     1 MiB (4 instances)
+  L3:                     8 MiB (1 instance)
+NUMA:
+  NUMA node(s):           1
+  NUMA node0 CPU(s):      0-7
+Vulnerabilities:
+  Gather data sampling:   Vulnerable: No microcode
+  Itlb multihit:          KVM: Mitigation: VMX disabled
+  L1tf:                   Mitigation; PTE Inversion; VMX conditional cache flushes,
+                          SMT vulnerable
+  Mds:                    Mitigation; Clear CPU buffers; SMT vulnerable
+  Meltdown:               Mitigation; PTI
+  Mmio stale data:        Mitigation; Clear CPU buffers; SMT vulnerable
+  Reg file data sampling: Not affected
+  Retbleed:               Mitigation; IBRS
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sa
+                          nitization
+  Spectre v2:             Mitigation; IBRS; IBPB conditional; STIBP conditional; RSB
+                           filling; PBRSB-eIBRS Not affected; BHI Not affected
+  Srbds:                  Mitigation; Microcode
+  Tsx async abort:        Mitigation; TSX disabled
+
+############## Memory Information ####################
+lsmem
+RANGE                                 SIZE  STATE REMOVABLE BLOCK
+0x0000000000000000-0x000000007fffffff   2G online       yes     0
+0x0000000100000000-0x000000107fffffff  62G online       yes  2-32
+
+Memory block size:         2G
+Total online memory:      64G
+Total offline memory:      0B
+
+############## Storage Information ####################
+fdisk -l # Manually copied physical disks
+Disk /dev/sda: 59 GiB, 63350767616 bytes, 123731968 sectors
+Disk model: SuperMicro SSD
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 673FC9EC-8F0E-42B7-B284-2557070488B1
+
+Device       Start       End   Sectors Size Type
+/dev/sda1     2048   2099199   2097152   1G EFI System
+/dev/sda2  2099200 123729919 121630720  58G Linux filesystem
+
+
+Disk /dev/sdb: 9.1 TiB, 10000831348736 bytes, 19532873728 sectors
+Disk model: ST10000NM0086-2A
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+
+Disk /dev/sdc: 9.1 TiB, 10000831348736 bytes, 19532873728 sectors
+Disk model: ST10000NM0086-2A
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+
+############## NIC Information ####################
+lshw -class network
+  *-network:0
+       description: Ethernet interface
+       product: Ethernet Controller X550
+       vendor: Intel Corporation
+       physical id: 0
+       bus info: pci@0000:02:00.0
+       logical name: eno3
+       version: 01
+       serial: 0c:c4:7a:91:e1:a8
+       capacity: 10Gbit/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi msix pciexpress bus_master cap_list rom ethernet physical tp 100bt-fd 1000bt-fd 2500bt-fd 5000bt-fd 10000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=ixgbe driverversion=6.10.6-arch1-1 firmware=0x8000038e latency=0 link=no multicast=yes port=twisted pair
+       resources: irq:16 memory:d0200000-d03fffff memory:d0404000-d0407fff memory:df080000-df0fffff memory:df400000-df4fffff memory:df300000-df3fffff
+  *-network:1
+       description: Ethernet interface
+       product: Ethernet Controller X550
+       vendor: Intel Corporation
+       physical id: 0.1
+       bus info: pci@0000:02:00.1
+       logical name: eno4
+       version: 01
+       serial: 0c:c4:7a:91:e1:a9
+       size: 1Gbit/s
+       capacity: 10Gbit/s
+       width: 64 bits
+       clock: 33MHz
+       capabilities: pm msi msix pciexpress bus_master cap_list rom ethernet physical tp 100bt-fd 1000bt-fd 2500bt-fd 5000bt-fd 10000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=ixgbe driverversion=6.10.6-arch1-1 duplex=full firmware=0x8000038e latency=0 link=yes multicast=yes port=twisted pair speed=1Gbit/s
+       resources: irq:17 memory:d0000000-d01fffff memory:d0400000-d0403fff memory:df000000-df07ffff memory:df200000-df2fffff memory:df100000-df1fffff
+  *-network
+       description: Ethernet interface
+       product: I210 Gigabit Network Connection
+       vendor: Intel Corporation
+       physical id: 0
+       bus info: pci@0000:05:00.0
+       logical name: eno2
+       version: 03
+       serial: 0c:c4:7a:91:de:89
+       size: 100Mbit/s
+       capacity: 1Gbit/s
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=igb driverversion=6.10.6-arch1-1 duplex=full firmware=3.25, 0x800005cc ip=192.168.140.25 latency=0 link=yes multicast=yes port=twisted pair speed=100Mbit/s
+       resources: irq:17 memory:df500000-df57ffff ioport:e000(size=32) memory:df580000-df583fff
+  *-network
+       description: Ethernet interface
+       product: Ethernet Connection (2) I219-LM
+       vendor: Intel Corporation
+       physical id: 1f.6
+       bus info: pci@0000:00:1f.6
+       logical name: eno1
+       version: 31
+       serial: 0c:c4:7a:91:de:88
+       capacity: 1Gbit/s
+       width: 32 bits
+       clock: 33MHz
+       capabilities: pm msi bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+       configuration: autonegotiation=on broadcast=yes driver=e1000e driverversion=6.10.6-arch1-1 firmware=0.8-4 latency=0 link=no multicast=yes port=twisted pair
+       resources: irq:39 memory:df600000-df61ffff
+
+############## Additional Details Information ####################
+lshw # Manually copied System, MB, and Memory details
+h-router-wg
+    description: System
+    product: CSTM: Vokevr Transcoder 1U i7 w/Quick Sync (To be filled by O.E.M.)
+    vendor: Silicon Mechanics
+    version: 0123456789
+    serial: SM111551
+    width: 64 bits
+    capabilities: smbios-3.0.0 dmi-3.0.0 smp vsyscall32
+    configuration: boot=normal chassis=server family=To be filled by O.E.M. sku=To be filled by O.E.M. uuid=c4534c2e-c948-11e6-bacc-d021ad06f703
+  *-core
+       description: Motherboard
+       product: X11SSZ-TLN4F
+       vendor: Supermicro
+       physical id: 0
+       version: 1.10
+       serial: ZM168S029902
+       slot: To be filled by O.E.M.
+     *-firmware
+          description: BIOS
+          vendor: American Megatrends Inc.
+          physical id: 0
+          version: 1.0c
+          date: 04/06/2016
+          size: 64KiB
+          capacity: 16MiB
+          capabilities: pci upgrade shadowing cdboot bootselect socketedrom edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int14serial int17printer acpi usb biosbootspecification uefi
+     *-memory
+          description: System Memory
+          physical id: 2d
+          slot: System board or motherboard
+          size: 64GiB
+        *-bank:0
+             description: DIMM DDR4 Synchronous 2133 MHz (0.5 ns)
+             product: M391A2K43BB1-CPB
+             vendor: Samsung
+             physical id: 0
+             serial: 51220621
+             slot: DIMMA1
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+
+##### Rest of hardware information ######
+lshw
+h-router-wg
+    description: System
+    product: CSTM: Vokevr Transcoder 1U i7 w/Quick Sync (To be filled by O.E.M.)
+    vendor: Silicon Mechanics
+    version: 0123456789
+    serial: SM111551
+    width: 64 bits
+    capabilities: smbios-3.0.0 dmi-3.0.0 smp vsyscall32
+    configuration: boot=normal chassis=server family=To be filled by O.E.M. sku=To be filled by O.E.M. uuid=c4534c2e-c948-11e6-bacc-d021ad06f703
+  *-core
+       description: Motherboard
+       product: X11SSZ-TLN4F
+       vendor: Supermicro
+       physical id: 0
+       version: 1.10
+       serial: ZM168S029902
+       slot: To be filled by O.E.M.
+     *-firmware
+          description: BIOS
+          vendor: American Megatrends Inc.
+          physical id: 0
+          version: 1.0c
+          date: 04/06/2016
+          size: 64KiB
+          capacity: 16MiB
+          capabilities: pci upgrade shadowing cdboot bootselect socketedrom edd int13floppy1200 int13floppy720 int13floppy2880 int5printscreen int14serial int17printer acpi usb biosbootspecification uefi
+     *-cache:0
+          description: L1 cache
+          physical id: 28
+          slot: L1 Cache
+          size: 128KiB
+          capacity: 128KiB
+          capabilities: synchronous internal write-back data
+          configuration: level=1
+     *-cache:1
+          description: L1 cache
+          physical id: 29
+          slot: L1 Cache
+          size: 128KiB
+          capacity: 128KiB
+          capabilities: synchronous internal write-back instruction
+          configuration: level=1
+     *-cache:2
+          description: L2 cache
+          physical id: 2a
+          slot: L2 Cache
+          size: 1MiB
+          capacity: 1MiB
+          capabilities: synchronous internal write-back unified
+          configuration: level=2
+     *-cache:3
+          description: L3 cache
+          physical id: 2b
+          slot: L3 Cache
+          size: 8MiB
+          capacity: 8MiB
+          capabilities: synchronous internal write-back unified
+          configuration: level=3
+     *-cpu
+          description: CPU
+          product: Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+          vendor: Intel Corp.
+          physical id: 2c
+          bus info: cpu@0
+          version: 6.94.3
+          serial: To Be Filled By O.E.M.
+          slot: CPU
+          size: 800MHz
+          capacity: 4005MHz
+          width: 64 bits
+          clock: 100MHz
+          capabilities: lm fpu fpu_exception wp vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp x86-64 constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust sgx bmi1 avx2 smep bmi2 erms invpcid mpx rdseed adx smap clflushopt intel_pt xsaveopt xsavec xgetbv1 xsaves dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp vnmi md_clear flush_l1d arch_capabilities cpufreq
+          configuration: cores=4 enabledcores=4 microcode=240 threads=8
+     *-memory
+          description: System Memory
+          physical id: 2d
+          slot: System board or motherboard
+          size: 64GiB
+        *-bank:0
+             description: DIMM DDR4 Synchronous 2133 MHz (0.5 ns)
+             product: M391A2K43BB1-CPB
+             vendor: Samsung
+             physical id: 0
+             serial: 51220621
+             slot: DIMMA1
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+        *-bank:1
+             description: DIMM DDR4 Synchronous 2133 MHz (0.5 ns)
+             product: M391A2K43BB1-CPB
+             vendor: Samsung
+             physical id: 1
+             serial: 51220620
+             slot: DIMMA2
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+        *-bank:2
+             description: DIMM DDR4 Synchronous 2133 MHz (0.5 ns)
+             product: M391A2K43BB1-CPB
+             vendor: Samsung
+             physical id: 2
+             serial: 51220620
+             slot: DIMMB1
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+        *-bank:3
+             description: DIMM DDR4 Synchronous 2133 MHz (0.5 ns)
+             product: M391A2K43BB1-CPB
+             vendor: Samsung
+             physical id: 3
+             serial: 51182019
+             slot: DIMMB2
+             size: 16GiB
+             width: 64 bits
+             clock: 2133MHz (0.5ns)
+     *-pci
+          description: Host bridge
+          product: Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers
+          vendor: Intel Corporation
+          physical id: 100
+          bus info: pci@0000:00:00.0
+          version: 07
+          width: 32 bits
+          clock: 33MHz
+          configuration: driver=skl_uncore
+          resources: irq:0
+        *-display
+             description: VGA compatible controller
+             product: HD Graphics 530
+             vendor: Intel Corporation
+             physical id: 2
+             bus info: pci@0000:00:02.0
+             logical name: /dev/fb0
+             version: 06
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pciexpress msi pm vga_controller bus_master cap_list rom fb
+             configuration: depth=32 driver=i915 latency=0 resolution=1920,1080
+             resources: irq:37 memory:de000000-deffffff memory:c0000000-cfffffff ioport:f000(size=64) memory:c0000-dffff
+        *-usb
+             description: USB controller
+             product: 100 Series/C230 Series Chipset Family USB 3.0 xHCI Controller
+             vendor: Intel Corporation
+             physical id: 14
+             bus info: pci@0000:00:14.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi xhci bus_master cap_list
+             configuration: driver=xhci_hcd latency=0
+             resources: irq:29 memory:df630000-df63ffff
+           *-usbhost:0
+                product: xHCI Host Controller
+                vendor: Linux 6.10.6-arch1-1 xhci-hcd
+                physical id: 0
+                bus info: usb@1
+                logical name: usb1
+                version: 6.10
+                capabilities: usb-2.00
+                configuration: driver=hub slots=16 speed=480Mbit/s
+              *-usb:0
+                   description: Keyboard
+                   product: Dell Dell USB Keyboard
+                   vendor: Dell
+                   physical id: 4
+                   bus info: usb@1:4
+                   logical name: input3
+                   logical name: /dev/input/event3
+                   logical name: input3::capslock
+                   logical name: input3::numlock
+                   logical name: input3::scrolllock
+                   version: 3.06
+                   capabilities: usb-1.10 usb
+                   configuration: driver=usbhid maxpower=70mA speed=2Mbit/s
+              *-usb:1
+                   description: USB hub
+                   product: Hub
+                   vendor: ATEN International Co., Ltd
+                   physical id: a
+                   bus info: usb@1:a
+                   version: 0.00
+                   capabilities: usb-2.00
+                   configuration: driver=hub maxpower=100mA slots=4 speed=480Mbit/s
+                 *-usb
+                      description: Keyboard
+                      product: Virtual mouse/keyboard device
+                      vendor: ATEN International Co., Ltd
+                      physical id: 1
+                      bus info: usb@1:a.1
+                      version: 1.00
+                      capabilities: usb-1.10
+                      configuration: driver=usbhid maxpower=160mA speed=2Mbit/s
+           *-usbhost:1
+                product: xHCI Host Controller
+                vendor: Linux 6.10.6-arch1-1 xhci-hcd
+                physical id: 1
+                bus info: usb@2
+                logical name: usb2
+                version: 6.10
+                capabilities: usb-3.00
+                configuration: driver=hub slots=10 speed=5000Mbit/s
+        *-generic
+             description: Signal processing controller
+             product: 100 Series/C230 Series Chipset Family Thermal Subsystem
+             vendor: Intel Corporation
+             physical id: 14.2
+             bus info: pci@0000:00:14.2
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi cap_list
+             configuration: driver=intel_pch_thermal latency=0
+             resources: irq:18 memory:df655000-df655fff
+        *-communication:0
+             description: Communication controller
+             product: 100 Series/C230 Series Chipset Family MEI Controller #1
+             vendor: Intel Corporation
+             physical id: 16
+             bus info: pci@0000:00:16.0
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=mei_me latency=0
+             resources: irq:38 memory:df654000-df654fff
+        *-communication:1
+             description: Serial controller
+             product: 100 Series/C230 Series Chipset Family KT Redirection
+             vendor: Intel Corporation
+             physical id: 16.3
+             bus info: pci@0000:00:16.3
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: msi pm 16550 cap_list
+             configuration: driver=serial latency=0
+             resources: irq:19 ioport:f0a0(size=8) memory:df653000-df653fff
+        *-sata
+             description: SATA controller
+             product: Q170/Q150/B150/H170/H110/Z170/CM236 Chipset SATA Controller [AHCI Mode]
+             vendor: Intel Corporation
+             physical id: 17
+             bus info: pci@0000:00:17.0
+             version: 31
+             width: 32 bits
+             clock: 66MHz
+             capabilities: sata msi pm ahci_1.0 bus_master cap_list
+             configuration: driver=ahci latency=0
+             resources: irq:28 memory:df640000-df641fff memory:df652000-df6520ff ioport:f090(size=8) ioport:f080(size=4) ioport:f060(size=32) memory:df651000-df6517ff
+        *-pci:0
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #1
+             vendor: Intel Corporation
+             physical id: 1c
+             bus info: pci@0000:00:1c.0
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:24 ioport:2000(size=4096) memory:8cc00000-8cdfffff ioport:8ce00000(size=2097152)
+        *-pci:1
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #5
+             vendor: Intel Corporation
+             physical id: 1c.4
+             bus info: pci@0000:00:1c.4
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:25 memory:df000000-df4fffff ioport:d0000000(size=5242880)
+           *-network:0
+                description: Ethernet interface
+                product: Ethernet Controller X550
+                vendor: Intel Corporation
+                physical id: 0
+                bus info: pci@0000:02:00.0
+                logical name: eno3
+                version: 01
+                serial: 0c:c4:7a:91:e1:a8
+                capacity: 10Gbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi msix pciexpress bus_master cap_list rom ethernet physical tp 100bt-fd 1000bt-fd 2500bt-fd 5000bt-fd 10000bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=ixgbe driverversion=6.10.6-arch1-1 firmware=0x8000038e latency=0 link=no multicast=yes port=twisted pair
+                resources: irq:16 memory:d0200000-d03fffff memory:d0404000-d0407fff memory:df080000-df0fffff memory:df400000-df4fffff memory:df300000-df3fffff
+           *-network:1
+                description: Ethernet interface
+                product: Ethernet Controller X550
+                vendor: Intel Corporation
+                physical id: 0.1
+                bus info: pci@0000:02:00.1
+                logical name: eno4
+                version: 01
+                serial: 0c:c4:7a:91:e1:a9
+                size: 1Gbit/s
+                capacity: 10Gbit/s
+                width: 64 bits
+                clock: 33MHz
+                capabilities: pm msi msix pciexpress bus_master cap_list rom ethernet physical tp 100bt-fd 1000bt-fd 2500bt-fd 5000bt-fd 10000bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=ixgbe driverversion=6.10.6-arch1-1 duplex=full firmware=0x8000038e latency=0 link=yes multicast=yes port=twisted pair speed=1Gbit/s
+                resources: irq:17 memory:d0000000-d01fffff memory:d0400000-d0403fff memory:df000000-df07ffff memory:df200000-df2fffff memory:df100000-df1fffff
+        *-pci:2
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #9
+             vendor: Intel Corporation
+             physical id: 1d
+             bus info: pci@0000:00:1d.0
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:26
+        *-pci:3
+             description: PCI bridge
+             product: 100 Series/C230 Series Chipset Family PCI Express Root Port #10
+             vendor: Intel Corporation
+             physical id: 1d.1
+             bus info: pci@0000:00:1d.1
+             version: f1
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pci pciexpress msi pm normal_decode bus_master cap_list
+             configuration: driver=pcieport
+             resources: irq:27 ioport:e000(size=4096) memory:df500000-df5fffff
+           *-network
+                description: Ethernet interface
+                product: I210 Gigabit Network Connection
+                vendor: Intel Corporation
+                physical id: 0
+                bus info: pci@0000:05:00.0
+                logical name: eno2
+                version: 03
+                serial: 0c:c4:7a:91:de:89
+                size: 100Mbit/s
+                capacity: 1Gbit/s
+                width: 32 bits
+                clock: 33MHz
+                capabilities: pm msi msix pciexpress bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+                configuration: autonegotiation=on broadcast=yes driver=igb driverversion=6.10.6-arch1-1 duplex=full firmware=3.25, 0x800005cc ip=192.168.140.25 latency=0 link=yes multicast=yes port=twisted pair speed=100Mbit/s
+                resources: irq:17 memory:df500000-df57ffff ioport:e000(size=32) memory:df580000-df583fff
+        *-isa
+             description: ISA bridge
+             product: C236 Chipset LPC/eSPI Controller
+             vendor: Intel Corporation
+             physical id: 1f
+             bus info: pci@0000:00:1f.0
+             version: 31
+             width: 32 bits
+             clock: 33MHz
+             capabilities: isa bus_master
+             configuration: latency=0
+           *-pnp00:00
+                product: Motherboard registers
+                physical id: 0
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:01
+                product: 16550A-compatible COM port
+                physical id: 1
+                capabilities: pnp
+                configuration: driver=serial
+           *-pnp00:02
+                product: 16550A-compatible COM port
+                physical id: 2
+                capabilities: pnp
+                configuration: driver=serial
+           *-pnp00:03
+                product: Motherboard registers
+                physical id: 3
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:04
+                product: Motherboard registers
+                physical id: 4
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:05
+                product: AT Real-Time Clock
+                physical id: 5
+                capabilities: pnp
+                configuration: driver=rtc_cmos
+           *-pnp00:06
+                product: PnP device INT3f0d
+                vendor: Interphase Corporation
+                physical id: 6
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:07
+                product: Motherboard registers
+                physical id: 7
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:08
+                product: Motherboard registers
+                physical id: 8
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:09
+                product: Motherboard registers
+                physical id: 9
+                capabilities: pnp
+                configuration: driver=system
+           *-pnp00:0a
+                product: Motherboard registers
+                physical id: a
+                capabilities: pnp
+                configuration: driver=system
+        *-memory UNCLAIMED
+             description: Memory controller
+             product: 100 Series/C230 Series Chipset Family Power Management Controller
+             vendor: Intel Corporation
+             physical id: 1f.2
+             bus info: pci@0000:00:1f.2
+             version: 31
+             width: 32 bits
+             clock: 33MHz (30.3ns)
+             capabilities: bus_master
+             configuration: latency=0
+             resources: memory:df64c000-df64ffff
+        *-multimedia
+             description: Audio device
+             product: 100 Series/C230 Series Chipset Family HD Audio Controller
+             vendor: Intel Corporation
+             physical id: 1f.3
+             bus info: pci@0000:00:1f.3
+             logical name: card0
+             logical name: /dev/snd/controlC0
+             logical name: /dev/snd/hwC0D0
+             logical name: /dev/snd/hwC0D2
+             logical name: /dev/snd/pcmC0D0c
+             logical name: /dev/snd/pcmC0D0p
+             logical name: /dev/snd/pcmC0D3p
+             logical name: /dev/snd/pcmC0D7p
+             logical name: /dev/snd/pcmC0D8p
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list
+             configuration: driver=snd_hda_intel latency=32
+             resources: irq:45 memory:df648000-df64bfff memory:df620000-df62ffff
+           *-input:0
+                product: HDA Intel PCH HDMI/DP,pcm=3
+                physical id: 0
+                logical name: input10
+                logical name: /dev/input/event10
+           *-input:1
+                product: HDA Intel PCH HDMI/DP,pcm=7
+                physical id: 1
+                logical name: input11
+                logical name: /dev/input/event11
+           *-input:2
+                product: HDA Intel PCH HDMI/DP,pcm=8
+                physical id: 2
+                logical name: input12
+                logical name: /dev/input/event12
+           *-input:3
+                product: HDA Intel PCH Mic
+                physical id: 3
+                logical name: input8
+                logical name: /dev/input/event8
+           *-input:4
+                product: HDA Intel PCH Front Line Out
+                physical id: 4
+                logical name: input9
+                logical name: /dev/input/event9
+        *-serial
+             description: SMBus
+             product: 100 Series/C230 Series Chipset Family SMBus
+             vendor: Intel Corporation
+             physical id: 1f.4
+             bus info: pci@0000:00:1f.4
+             version: 31
+             width: 64 bits
+             clock: 33MHz
+             configuration: driver=i801_smbus latency=0
+             resources: irq:16 memory:df650000-df6500ff ioport:f040(size=32)
+        *-network
+             description: Ethernet interface
+             product: Ethernet Connection (2) I219-LM
+             vendor: Intel Corporation
+             physical id: 1f.6
+             bus info: pci@0000:00:1f.6
+             logical name: eno1
+             version: 31
+             serial: 0c:c4:7a:91:de:88
+             capacity: 1Gbit/s
+             width: 32 bits
+             clock: 33MHz
+             capabilities: pm msi bus_master cap_list ethernet physical tp 10bt 10bt-fd 100bt 100bt-fd 1000bt-fd autonegotiation
+             configuration: autonegotiation=on broadcast=yes driver=e1000e driverversion=6.10.6-arch1-1 firmware=0.8-4 latency=0 link=no multicast=yes port=twisted pair
+             resources: irq:39 memory:df600000-df61ffff
+  *-power:0 UNCLAIMED
+       description: To Be Filled By O.E.M.
+       product: To Be Filled By O.E.M.
+       vendor: To Be Filled By O.E.M.
+       physical id: 1
+       version: To Be Filled By O.E.M.
+       serial: To Be Filled By O.E.M.
+       capacity: 32768mWh
+  *-power:1 UNCLAIMED
+       description: To Be Filled By O.E.M.
+       product: To Be Filled By O.E.M.
+       vendor: To Be Filled By O.E.M.
+       physical id: 2
+       version: To Be Filled By O.E.M.
+       serial: To Be Filled By O.E.M.
+       capacity: 32768mWh
+  *-input:0
+       product: Sleep Button
+       physical id: 3
+       logical name: input0
+       logical name: /dev/input/event0
+       capabilities: platform
+  *-input:1
+       product: Power Button
+       physical id: 4
+       logical name: input1
+       logical name: /dev/input/event1
+       capabilities: platform
+  *-input:2
+       product: Power Button
+       physical id: 5
+       logical name: input2
+       logical name: /dev/input/event2
+       capabilities: platform
+  *-input:3
+       product: HID 0557:2419
+       physical id: 6
+       logical name: input4
+       logical name: /dev/input/event4
+       logical name: input4::capslock
+       logical name: input4::compose
+       logical name: input4::kana
+       logical name: input4::numlock
+       logical name: input4::scrolllock
+       capabilities: usb
+  *-input:4
+       product: HID 0557:2419
+       physical id: 7
+       logical name: input5
+       logical name: /dev/input/event5
+       logical name: /dev/input/mouse0
+       capabilities: usb
+  *-input:5
+       product: Video Bus
+       physical id: 8
+       logical name: input6
+       logical name: /dev/input/event6
+       capabilities: platform
+  *-input:6
+       product: PC Speaker
+       physical id: 9
+       logical name: input7
+       logical name: /dev/input/event7
+       capabilities: isa
+
+############## PCI Cards Details Information ####################
+lspci
+00:00.0 Host bridge: Intel Corporation Xeon E3-1200 v5/E3-1500 v5/6th Gen Core Processor Host Bridge/DRAM Registers (rev 07)
+00:02.0 VGA compatible controller: Intel Corporation HD Graphics 530 (rev 06)
+00:14.0 USB controller: Intel Corporation 100 Series/C230 Series Chipset Family USB 3.0 xHCI Controller (rev 31)
+00:14.2 Signal processing controller: Intel Corporation 100 Series/C230 Series Chipset Family Thermal Subsystem (rev 31)
+00:16.0 Communication controller: Intel Corporation 100 Series/C230 Series Chipset Family MEI Controller #1 (rev 31)
+00:16.3 Serial controller: Intel Corporation 100 Series/C230 Series Chipset Family KT Redirection (rev 31)
+00:17.0 SATA controller: Intel Corporation Q170/Q150/B150/H170/H110/Z170/CM236 Chipset SATA Controller [AHCI Mode] (rev 31)
+00:1c.0 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #1 (rev f1)
+00:1c.4 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #5 (rev f1)
+00:1d.0 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #9 (rev f1)
+00:1d.1 PCI bridge: Intel Corporation 100 Series/C230 Series Chipset Family PCI Express Root Port #10 (rev f1)
+00:1f.0 ISA bridge: Intel Corporation C236 Chipset LPC/eSPI Controller (rev 31)
+00:1f.2 Memory controller: Intel Corporation 100 Series/C230 Series Chipset Family Power Management Controller (rev 31)
+00:1f.3 Audio device: Intel Corporation 100 Series/C230 Series Chipset Family HD Audio Controller (rev 31)
+00:1f.4 SMBus: Intel Corporation 100 Series/C230 Series Chipset Family SMBus (rev 31)
+00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (2) I219-LM (rev 31)
+02:00.0 Ethernet controller: Intel Corporation Ethernet Controller X550 (rev 01)
+02:00.1 Ethernet controller: Intel Corporation Ethernet Controller X550 (rev 01)
+05:00.0 Ethernet controller: Intel Corporation I210 Gigabit Network Connection (rev 03)
