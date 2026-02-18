@@ -1,0 +1,22 @@
+############## Windows Information #################
+
+############## CPU Information ####################
+lscpu
+
+############## Memory Information ####################
+lsmem
+
+############## Storage Information ####################
+fdisk -l # Manually copied physical disks
+
+############## NIC Information ####################
+lshw -class network
+
+############## Additional Details Information ####################
+lshw # Manually copied System, MB, and Memory details
+
+##### Rest of hardware information ######
+lshw
+
+############## PCI Cards Details Information ####################
+lspci
